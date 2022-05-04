@@ -46,7 +46,7 @@ Cómo habilitar y configurar cuotas de disco de usuario en Windows
       -Guarde los cambios (Aplicar). En algún momento (según el tamaño del disco y la cantidad de archivos),
       Windows contará el uso total del espacio en disco por cada usuario.
 
-       Haga clic en el Entradas de cuota botón. Verá una tabla resultante que muestra las cuotas y el tamaño actual
+       Haga clic en cuota de Entradas.   Verá una tabla resultante que muestra las cuotas y el tamaño actual
        del espacio utilizado por cada usuario (cuyos archivos se encuentran en el sistema de archivos).
        Aquí puede ver de un vistazo qué usuarios ya han superado sus cuotas de disco.
 
@@ -78,73 +78,7 @@ Cómo habilitar y configurar cuotas de disco de usuario en Windows
      administrativas -> Sistema -> Cuotas de disco. Para habilitar cuotas de disco similares a las mencionadas anteriormente,
       establezca las siguientes configuraciones en su GPO:
 
-     Habilitar cuotas de disco: Enable
-     Aplicar límite de cuota de disco: Enable
-     Límite de cuota predeterminado y nivel de advertencia: Enable
-     (Límite de cuota predeterminado / nivel de advertencia: 1 Gb)
-     Registrar evento cuando se excedió el límite de cuota: Enable
-     Aplicar la política a los medios extraíbles: Enable (si necesita aplicar cuotas para medios extraíbles,
-     incluidas unidades flash USB)
 
-        -Queda por asignar este GPO a la unidad organizativa con equipos / servidores en los que debe aplicar cuotas de
-         disco y esperar la actualización de la configuración de la política de grupo.
-
-         Las cuotas de disco configuradas a través de GPO se aplican a todos los discos de la computadora.
-         No puede configurar exclusiones para usuarios específicos.
-
-       -Administrar cuotas de disco mediante el símbolo del sistema / PowerShell
-        Las cuotas de NTFS también se pueden administrar desde el símbolo del sistema. Para hacerlo, el comando cuota
-        fsutil se utiliza.
-
-        Para habilitar la cuota flexible para un disco, use el comando:
-
-        fsutil quota track E:
-
-        Para habilitar la cuota NTFS estricta, ejecute:
-
-        fsutil quota enforce E:
-
-        Para deshabilitar completamente las cuotas de disco, use el comando:
-
-        fsutil quota disable E:
-
-        Para obtener la configuración de cuota actual para una unidad específica, ejecute:
-
-        fsutil quota query e:
-
-        Obtenga una lista de usuarios que ya han superado sus cuotas de disco:
-
-        fsutil quota violations
-
-        Para cambiar los umbrales de cuota para un usuario específico, use el comando:
-
-        fsutil quota modify E: 2000000000 100000000 corpaabrams
-
-        Los tamaños de las cuotas se especifican en bytes (2 GB en este ejemplo).
-         El primer valor es el tamaño máximo de los datos del usuario en el disco (cuota estricta),
-          el segundo es el límite en el que aparecen las advertencias (nivel de advertencia).
-
-        Descubra la frecuencia de actualización de las cuotas de disco (en segundos):
-
-        fsutil behavior query quotanotify
-
-        De forma predeterminada, las cuotas se actualizan una vez por hora.
-
-       -No hay cmdlets de PowerShell integrados para administrar cuotas de disco NTFS. Sin embargo,
-       se pueden gestionar mediante el Win32_DiskQuota Clase WMI. Por ejemplo, el siguiente script de PowerShell mostrará
-        información sobre las cuotas de usuarios actuales.
-
-
-        $strCom = "."
-        $colItems = get-wmiobject -class "Win32_DiskQuota" -namespace "rootCIMV2" -computername $strCom
-        foreach ($objItem in $colItems) {
-        write-host "Quota usage: " $objItem.DiskSpaceUsed
-        write-host "Quota Hard Limit: " $objItem.Limit
-        write-host "Drive: " $objItem.QuotaVolume
-        write-host "Status: " $objItem.Status
-        write-host "Username: " $objItem.User
-        write-host "Quota Warning Limit: " $objItem.WarningLimit
-        }
 
 Cómo instalar NextCloud en Ubuntu 20.04 con Apache
 
@@ -515,6 +449,29 @@ Instalador web
                 Finalizada la configuración del sitio, se inicia sesión automática en el sitio, mostrándose el área personal:
 
                 ¡Ya podemos empezar a trabajar en nuestro nuevo sitio Moodle!
+
+
+ instalar el so kubuntu en maquina virtual:
+
+            descargado e instalado el so kubuntu en la "estacion de trabajo" maquina virtual
+            se ejectuta update desde consola
+
+             -comando(sudo apt-get install virtualbox).
+
+            para instalar virtual box.
+            el libre office biene pre instalado de por si en las ultimas versiones de kubuntu
+            Se instala DIA como programa de diseño grafico con :
+
+            -comando(sudo apt install dia).
+
+            el navegador por defecto pre instalado es mozilla
+            Las copias de seguridad estan gestionadas con Déjà Dup
+            El cual biene preinstalado en kubuntu
+            Finalmente se instala filezilla FTP con:
+
+              -comando(sudo apt-get install filezilla).
+
+            la estacion de trabajo ya tiene todos los programas
 
 
 
