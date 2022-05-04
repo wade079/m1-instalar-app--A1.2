@@ -391,3 +391,137 @@ Cómo instalar y configurar Postfix en Ubuntu 18.04:
             directorio ~/Maildir/new:
 
            -Parece que nuestro correo se entregó.
+
+
+Antes de instalar Moodle en Ubuntu 20.04 LTS
+
+            -Si tienes interés en seguir los pasos de esta guía de instalación de Moodle en Ubuntu 20.04, asegúrate de
+             cumplir al menos estos requisitos mínimos:
+
+             Un sistema Ubuntu 20.04 LTS actualizado.
+             Una pila o entorno tipo LAMP (servicio web con PHP versión desde 7.3 hasta 8.0 y motor de bases de datos).
+             Un usuario con permisos de sudo.
+             Acceso a Internet.
+
+Cómo descargar Moodle para Ubuntu 20.04
+
+              Vamos a descargar Moodle para Ubuntu 20.04 LTS desde la zona de descargas de la web oficial,
+              donde encontraremos la última versión estable:
+
+              Los paquetes están disponibles en formato .tgz y .zip, cuyos enlaces conducen a una página de descarga automática,
+              aunque en este tutorial realizaremos la descarga del paquete .tgz directamente desde consola con el comando wget:
+
+              -comando(~$ wget https://download.moodle.org/download.php/direct/stable400/moodle-latest-400.tgz).
+
+Cómo instalar Moodle en Ubuntu 20.04
+
+                Para poder instalar Moodle en Ubuntu 20.04 LTS necesitaremos realizar unas cuantas tareas de preparación del sistema
+                Descomprimiremos el paquete que acabamos de descargar directamente en la ubicación que nos interese:
+
+                 -comando(~$ sudo tar xf moodle-latest-400.tgz -C /var/www/html/).
+
+                Como Moodle necesita escribir en su propio directorio de instalación, cambiamos el propietario de este
+                directorio al usuario con el que corre el servicio web en Ubuntu 20.04 (www-data):
+
+                     -comando(~$ sudo chown -R www-data: /var/www/html/moodle/).
+
+                Necesitamos también un directorio para datos de Moodle, que crearemos fuera del alcance de la navegación web:
+
+                      -comando(~$ sudo mkdir /var/www/moodledata).
+
+                Cambiamos el propietario de este directorio al usuario con el que corre el servicio web en Ubuntu 20.04
+                (www-data) para que Moodle pueda escribir:
+
+                    -comando(~$ sudo chown www-data: /var/www/moodledata/).
+
+
+
+Base de datos
+
+                Moodle necesita el soporte necesario del motor de base de datos que tengamos en Ubuntu 20.04, por lo que
+                explicaremos cómo preparar los más usados.
+
+                NOTA : En las bases de datos en el tutorial nos dejan elejir entre POSTGRES y Mariadb, usamos Mariadb
+                otra Nota : el nombre de la base de datos es moodledb
+                El usuario de moodle es : ajuan        pass : @Ajuan117
+                hay que especificar que moodle necesita una ip estatica sino dara problemas a la hora de reiniciar
+
+                Usaremos el cliente de consola mysql y el usuario con el que administremos:
+
+                -comando(~$ mysql -u root -p).
+
+                Creamos la base de datos:
+
+                -comando(> create database moodle charset utf8mb4 collate utf8mb4_unicode_ci;).
+
+                En MariaDB o MySQL 5 creamos el usuario de la siguiente forma:
+
+                -comando(> create user moodle@localhost identified by 'XXXXXXXX';).
+
+                Pero en MySQL 8 conviene especificar el plugin compatible:
+
+                -comando(> create user moodle@localhost identified with mysql_native_password by 'XXXXXXXX';).
+
+                Otorgamos los permisos necesarios al usuario sobre la base:
+
+                -comando(> grant all privileges on moodle.* to moodle@localhost;).
+
+                Y cerramos la conexión:
+
+                -comando(> exit).
+
+
+Instalador web
+
+               Para acceder al instalador web de Moodle desde un navegador añadiremos la ruta de instalación, /moodle en
+                este tutorial, a la dirección del servidor Ubuntu 20.04 LTS.
+
+               Por ejemplo, la máquina Ubuntu 20.04 LTS sobre la que realizamos este artículo es accesible en el
+               subdominio o nombre DNS ubuntu2004.local.lan, por lo que usaremos http://ubuntu2004.local.lan/moodle como URL:
+
+                Una vez seleccionado el idioma confirmaremos las rutas de Moodle, aunque realmente sólo podríamos modificar
+                la ruta para el directorio de datos:
+
+                En este artículo hemos creado el directorio de datos en el valor por defecto que sugiere el instalador,
+                 por lo que no será necesario modificarlo.
+
+                El siguiente paso es seleccionar el motor de base de datos:
+
+                El desplegable mostrará las opciones disponibles en el sistema, por lo que elegiremos la que se adecúe a
+                 la configuración que hemos realizado antes. Importante: MySQL y MariaDB tienen opciones independientes.
+
+                Seguidamente un formulario nos solicitará los datos de conexión al servicio:
+
+                Proporcionaremos los nombres de la base de datos y el usuario, así como la contraseña, tal como los
+                 creamos en pasos anteriores.
+
+                Comprobada la conexión, será necesario aceptar las condiciones del servicio:
+
+                A continuación se muestra una lista de comprobación de requisitos para la instalación de Moodle en Ubuntu 20.04:
+
+                Si has seguido los pasos anteriores, todos los requisitos fundamentales se cumplirán y podrás continuar
+                 con el proceso de instalación.
+
+                El proceso de instalación en sí mostrará una larga lista de operaciones y sus resultados:
+
+                Este proceso tomará unos instantes, tras los que la instalación termina y comienza la configuración del
+                 administrador para el nuevo sitio Moodle:
+
+                También tendremos que suministrar información sobre la identidad del sitio:
+
+                La dirección de correo electrónico del contacto de soporte es obligatoria a partir de Moodle 4.0,
+                por lo que habrá que introducirla. Es una dirección que se mostrará a todos los usarios de nuestra plataforma.
+
+                Finalizada la configuración del sitio, se inicia sesión automática en el sitio, mostrándose el área personal:
+
+                ¡Ya podemos empezar a trabajar en nuestro nuevo sitio Moodle!
+
+
+
+
+
+
+
+
+
+
